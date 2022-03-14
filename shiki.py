@@ -1,3 +1,21 @@
+from functools import wraps
+from time import time
+import os
+
+def timing(f):
+    @wraps(f)
+    def wrap(*args, **kw):
+        ts = time()
+        result = f(*args, **kw)
+        te = time()
+        # write time taken to file
+        with open('time.txt', 'a') as x:
+            x.write(f'{file} took {te-ts} seconds\n')
+        # print('func:%r args:[%r, %r] took: %2.4f sec' % \
+        #   (f.__name__, args, kw, te-ts))
+        return result
+    return wrap
+
 # Reads from the input file to get the futoshiki puzzle and constraints
 def get_matrix(filename):
     with open(filename, 'r') as file:
@@ -74,6 +92,7 @@ def get_blank_cell():
     return False
 
 # main function that solves the puzzle
+@timing
 def solve_puzzle():
     if not backtrack():
         return False
@@ -82,9 +101,9 @@ def solve_puzzle():
 # Visits empty cells, places values and backtracks if it cannout progress further
 def backtrack():
     cell = get_blank_cell()
+    # print(cell)
     if not cell:
         return True
-
     for num in range(1, num_cells + 1):
         if (check_row(num, cell[0]) and check_col(num, cell[1]) and
         passes_constraint(num, cell[0], cell[1])):
@@ -96,33 +115,34 @@ def backtrack():
     return False
 
 # main function
-if __name__ == "__main__":
-    input_file = "input.txt"
-    # 0 0 0 0 3
-    # 0 0 0 0 0
-    # 0 0 0 0 0
-    # 0 0 0 0 0
-    # 3 0 0 0 1
+# if __name__ == "__main__":
+#     input_file = "input.txt"
+#     num_cells = 5
+#     matrix = []
+#     row_constraints = []
+#     col_constraints = []
+#     get_matrix(input_file)
+#     res = solve_puzzle()
 
-    # > 0 0 0
-    # 0 0 0 <
-    # 0 0 < 0
-    # 0 0 0 0
-    # 0 0 0 0
+#     if res:
+#         print(matrix)
+#     else:
+#         print("No solution formed")
 
-    # 0 0 v v 0
-    # 0 0 0 0 0
-    # 0 0 0 0 ^
-    # v 0 v 0 0 
-
-    num_cells = 5
-    matrix = []
-    row_constraints = []
-    col_constraints = []
-    get_matrix(input_file)
-    res = solve_puzzle()
-
-    if res:
+# read all files that start with input and solve them
+for file in os.listdir():
+    if file.startswith("inputw"):
+        print(file)
+        input_file = file
+        num_cells = int(file.split('.')[0].split('_')[1])
+        matrix = []
+        row_constraints = []
+        col_constraints = []
+        get_matrix(input_file)
         print(matrix)
-    else:
-        print("No solution formed")
+        res = solve_puzzle()
+
+        if res:
+            print(matrix)
+        else:
+            print("No solution formed")
