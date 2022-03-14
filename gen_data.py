@@ -61,11 +61,11 @@ def write_to_file(grid, hor_constraints, ver_constraints, filename):
     
 def main(n, num_values1, num_values2, num_values3, filename):
     # first argument is the size of the grid
-    # n = int(sys.argv[1])
-    # num_values1 = int(sys.argv[2])
-    # num_values2 = int(sys.argv[3])
-    # num_values3 = int(sys.argv[4])
-    # filename = sys.argv[5]
+    n = int(sys.argv[1])
+    num_values1 = int(sys.argv[2])
+    num_values2 = int(sys.argv[3])
+    num_values3 = int(sys.argv[4])
+    filename = sys.argv[5]
     print(n, num_values1, num_values2, num_values3, filename)
     grid = gen_grid(n, num_values1)
     hor_constraints = gen_horizontal_constraints(n, num_values2)
@@ -81,4 +81,5 @@ def main2(n, num_values1, num_values2, num_values3, filename):
 # increment n by 5, num_values is constant of 5, filename version should update
 if __name__ == '__main__':
     for i in range(3, 20):
-        main2(i, 0, 3, 3, 'inputw_' + str(i) + '.txt')
+        main(i, 0, 3, 3, 'inputw_' + str(i) + '.txt')
+        main2(i, 3, 3, 3, 'inputw_' + str(i) + '.txt')

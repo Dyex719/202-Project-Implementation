@@ -115,19 +115,19 @@ def backtrack():
     return False
 
 # main function
-# if __name__ == "__main__":
-#     input_file = "input.txt"
-#     num_cells = 5
-#     matrix = []
-#     row_constraints = []
-#     col_constraints = []
-#     get_matrix(input_file)
-#     res = solve_puzzle()
+if __name__ == "__main__":
+    input_file = "input.txt"
+    num_cells = 5
+    matrix = []
+    row_constraints = []
+    col_constraints = []
+    get_matrix(input_file)
+    res = solve_puzzle()
 
-#     if res:
-#         print(matrix)
-#     else:
-#         print("No solution formed")
+    if res:
+        print(matrix)
+    else:
+        print("No solution formed")
 
 # read all files that start with input and solve them
 for file in os.listdir():
